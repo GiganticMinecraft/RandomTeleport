@@ -13,6 +13,9 @@ import java.util.Random;
  */
 public final class ChunkUtil {
 
+    private static final int DESTINATION_Y_MAX = 150;
+    private static final int DESTINATION_Y_MIN = 30;
+
     private static final Random randomGenerator = new Random();
 
     private ChunkUtil() {
@@ -31,7 +34,7 @@ public final class ChunkUtil {
         int z = randomGenerator.nextInt(16);
 
         int y = -1;
-        for (int unsafeY = 255; unsafeY > 1; unsafeY--) {
+        for (int unsafeY = DESTINATION_Y_MAX; unsafeY >= DESTINATION_Y_MIN; unsafeY--) {
             Block block = chunk.getBlock(x, unsafeY, z);
 
             if (BlockUtil.isSurface(block)) {
@@ -43,7 +46,13 @@ public final class ChunkUtil {
             return Optional.empty();
         }
 
-        return Optional.of(chunk.getBlock(x, y, z).getLocation().add(0.5, 0, 0.5));
+        Block block = chunk.getBlock(x, y, z);
+
+        if (block.getBiome().toString().contains("OCEAN")) {
+            return Optional.empty();
+        }
+
+        return Optional.of(block.getLocation().add(0.5, 1.0, 0.5));
     }
 
 }

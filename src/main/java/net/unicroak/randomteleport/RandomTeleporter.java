@@ -1,10 +1,12 @@
 package net.unicroak.randomteleport;
 
 import net.unicroak.randomteleport.util.ChunkUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Optional;
  * @author unicroak
  */
 public final class RandomTeleporter {
+
+    private static final int MAX_TRY_COUNT = 256;
 
     private final Player player;
     private final int blockRadius;
@@ -39,7 +43,7 @@ public final class RandomTeleporter {
         Chunk randomChunk = ChunkUtil.getRandomizedChunk(randomWorld, blockRadius);
 
         Location location = null;
-        for (int tryCount = 0; tryCount < 40; tryCount++) {
+        for (int tryCount = 0; tryCount < MAX_TRY_COUNT; tryCount++) {
             Optional<Location> optionalLocation = ChunkUtil.getRandomizedSpawnableLocation(randomChunk);
             if (optionalLocation.isPresent()) {
                 location = optionalLocation.get();

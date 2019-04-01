@@ -5,7 +5,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
