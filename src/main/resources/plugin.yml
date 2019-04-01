@@ -1,0 +1,4 @@
+name: RandomTeleport
+version: @version@
+main: net.unicroak.randomteleport.RandomTeleport
+authors: [unicroak]
