@@ -2,3 +2,15 @@ name: RandomTeleport
 version: @version@
 main: net.unicroak.randomteleport.RandomTeleport
 authors: [unicroak]
+
+commands:
+  randomteleport:
+    aliases: [rtp]
+    permission: randomteleport.use
+
+permissions:
+  randomteleport.*:
+    children:
+      randomteleport.use: true
+  randomteleport.use:
+    default: true
