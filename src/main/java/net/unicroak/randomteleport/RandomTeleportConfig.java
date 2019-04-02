@@ -25,12 +25,12 @@ public final class RandomTeleportConfig {
 
     public static RandomTeleportConfig from(FileConfiguration configuration) {
         int radius = configuration.getInt(KEY_RADIUS);
-        List<World> destinationWorldList = configuration.getStringList(KEY_ENABLE_WORLDS)
+        List<World> enableWorldList = configuration.getStringList(KEY_ENABLE_WORLDS)
                 .stream()
                 .map(Bukkit::getWorld)
                 .collect(Collectors.toList());
 
-        return new RandomTeleportConfig(radius, destinationWorldList);
+        return new RandomTeleportConfig(radius, enableWorldList);
     }
 
     public int getRadius() {

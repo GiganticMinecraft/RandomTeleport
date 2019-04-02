@@ -14,8 +14,6 @@ import java.util.Optional;
  */
 public final class RandomTeleporter {
 
-    private static final int MAX_TRY_COUNT = 256;
-
     private final Player player;
     private final int blockRadius;
     private final List<World> enableWorldList;
@@ -35,23 +33,25 @@ public final class RandomTeleporter {
             return false;
         }
 
-        Chunk randomChunk = ChunkUtil.getRandomizedChunk(player.getWorld(), blockRadius);
+        Chunk randomChunk = null;
+        for (int tryCountToSearchChunk = 0; tryCountToSearchChunk < 16; tryCountToSearchChunk++) {
+            randomChunk = ChunkUtil.getRandomizedChunk(player.getWorld(), blockRadius);
 
-        Location location = null;
-        for (int tryCount = 0; tryCount < MAX_TRY_COUNT; tryCount++) {
-            Optional<Location> optionalLocation = ChunkUtil.getRandomizedSafetyLocation(randomChunk);
-            if (optionalLocation.isPresent()) {
-                location = optionalLocation.get();
+            if (!ChunkUtil.containsOceanBiome(randomChunk)) {
                 break;
             }
         }
-        if (location == null) {
+        if (ChunkUtil.containsOceanBiome(randomChunk)) return false;
+
+        Optional<Location> optionalDestination = ChunkUtil.getRandomizedSafetyLocation(randomChunk);
+
+        if (!optionalDestination.isPresent()) {
             return false;
+        } else {
+            Location destination = optionalDestination.get();
+            player.teleport(destination.add(0.5, 1.0, 0.5));
+            return true;
         }
-
-        player.teleport(location);
-
-        return true;
     }
 
 }

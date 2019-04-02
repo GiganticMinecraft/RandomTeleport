@@ -5,8 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author unicroak
@@ -30,29 +31,51 @@ public final class ChunkUtil {
     }
 
     public static Optional<Location> getRandomizedSafetyLocation(Chunk chunk) {
-        int x = randomGenerator.nextInt(16);
-        int z = randomGenerator.nextInt(16);
+        List<Location> safetyLocationList = collectSafetyLocations(chunk);
 
-        int y = -1;
-        for (int unsafeY = DESTINATION_Y_MAX; unsafeY >= DESTINATION_Y_MIN; unsafeY--) {
-            Block block = chunk.getBlock(x, unsafeY, z);
+        if (safetyLocationList.isEmpty()) {
+            return Optional.empty();
+        } else {
+            Collections.shuffle(safetyLocationList);
+            return Optional.of(safetyLocationList.get(0));
+        }
+    }
 
-            if (BlockUtil.isSurface(block)) {
-                y = unsafeY;
-                break;
+    public static boolean containsOceanBiome(Chunk chunk) {
+        List<Block> cornerBlockList = Arrays.asList(
+                chunk.getBlock(0, 1, 0),
+                chunk.getBlock(15, 1, 0),
+                chunk.getBlock(0, 1, 15),
+                chunk.getBlock(15, 1, 15)
+        );
+
+        return cornerBlockList.parallelStream()
+                .anyMatch(block -> BlockUtil.OCEAN_BIOME_LIST.contains(block.getBiome()));
+    }
+
+    private static List<Location> collectSafetyLocations(Chunk chunk) {
+        List<Location> safetyLocationList = new ArrayList<>();
+
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                findHighestSafetyBlockLocation(chunk, x, z).ifPresent(safetyLocationList::add);
             }
         }
-        if (y == -1) {
-            return Optional.empty();
-        }
 
-        Block block = chunk.getBlock(x, y, z);
+        return safetyLocationList;
+    }
 
-        if (block.getBiome().toString().contains("OCEAN")) {
-            return Optional.empty();
-        }
+    private static Optional<Location> findHighestSafetyBlockLocation(Chunk chunk, int x, int z) {
+        Stream<Block> descendingOrderedBlockStream = IntStream.range(DESTINATION_Y_MIN, DESTINATION_Y_MAX)
+                .boxed()
+                .collect(CollectorUtil.toReversed())
+                .map(unsafeY -> chunk.getBlock(x, unsafeY, z));
 
-        return Optional.of(block.getLocation().add(0.5, 1.0, 0.5));
+        Optional<Block> highestSafeBlock = descendingOrderedBlockStream
+                .filter(BlockUtil::isSafeForPlayer)
+                .findFirst();
+
+        return highestSafeBlock.map(Block::getLocation);
     }
 
 }
