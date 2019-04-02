@@ -23,6 +23,7 @@ public final class RandomTeleportCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "The command must be executed in game.");
+            return true;
         }
 
         RandomTeleporter teleporter = new RandomTeleporter(
