@@ -17,7 +17,7 @@ public final class RandomTeleport extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
-        getConfig(); // 一回ロードしないとdefaultConfigが読み込まれる
+        getConfig();
 
         this.randomTeleportConfig = RandomTeleportConfig.from(getConfig());
 
