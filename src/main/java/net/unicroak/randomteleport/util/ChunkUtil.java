@@ -29,7 +29,7 @@ public final class ChunkUtil {
         return world.getChunkAt(chunkX, chunkZ);
     }
 
-    public static Optional<Location> getRandomizedSpawnableLocation(Chunk chunk) {
+    public static Optional<Location> getRandomizedSafetyLocation(Chunk chunk) {
         int x = randomGenerator.nextInt(16);
         int z = randomGenerator.nextInt(16);
 

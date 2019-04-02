@@ -39,7 +39,7 @@ public final class RandomTeleporter {
 
         Location location = null;
         for (int tryCount = 0; tryCount < MAX_TRY_COUNT; tryCount++) {
-            Optional<Location> optionalLocation = ChunkUtil.getRandomizedSpawnableLocation(randomChunk);
+            Optional<Location> optionalLocation = ChunkUtil.getRandomizedSafetyLocation(randomChunk);
             if (optionalLocation.isPresent()) {
                 location = optionalLocation.get();
                 break;

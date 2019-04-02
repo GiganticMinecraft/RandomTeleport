@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 public final class RandomTeleportConfig {
 
     private static final String KEY_RADIUS = "Radius";
-    private static final String KEY_DESTINATION_WORLDS = "DestinationWorlds";
+    private static final String KEY_ENABLE_WORLDS = "EnableWorlds";
 
     private final int radius;
-    private final List<World> destinationWorldList;
+    private final List<World> enableWorldList;
 
-    private RandomTeleportConfig(int radius, List<World> destinationWorldList) {
+    private RandomTeleportConfig(int radius, List<World> enableWorldList) {
         this.radius = radius;
-        this.destinationWorldList = destinationWorldList;
+        this.enableWorldList = enableWorldList;
     }
 
     public static RandomTeleportConfig from(FileConfiguration configuration) {
         int radius = configuration.getInt(KEY_RADIUS);
-        List<World> destinationWorldList = configuration.getStringList(KEY_DESTINATION_WORLDS)
+        List<World> destinationWorldList = configuration.getStringList(KEY_ENABLE_WORLDS)
                 .stream()
                 .map(Bukkit::getWorld)
                 .collect(Collectors.toList());
@@ -37,8 +37,8 @@ public final class RandomTeleportConfig {
         return this.radius;
     }
 
-    public List<World> getDestinationWorldList() {
-        return this.destinationWorldList;
+    public List<World> getEnableWorldList() {
+        return this.enableWorldList;
     }
 
 }
