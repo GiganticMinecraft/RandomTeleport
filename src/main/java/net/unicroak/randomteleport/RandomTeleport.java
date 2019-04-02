@@ -15,7 +15,9 @@ public final class RandomTeleport extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
         saveDefaultConfig();
+        getConfig(); // 一回ロードしないとdefaultConfigが読み込まれる
 
         this.randomTeleportConfig = RandomTeleportConfig.from(getConfig());
 
