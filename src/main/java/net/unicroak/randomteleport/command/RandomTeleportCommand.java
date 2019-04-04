@@ -28,7 +28,7 @@ public final class RandomTeleportCommand implements CommandExecutor {
 
         RandomTeleporter teleporter = new RandomTeleporter(
                 (Player) sender,
-                randomTeleportConfig.getRadius(),
+                randomTeleportConfig.getRadiusPerWorld(((Player)sender).getWorld()),
                 randomTeleportConfig.getEnableWorldList()
         );
 
