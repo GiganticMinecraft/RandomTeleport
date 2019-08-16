@@ -59,7 +59,8 @@ public final class BlockUtil {
             Material.SNOW_BLOCK,
             Material.NETHERRACK,
             Material.GLOWSTONE,
-            Material.SEA_LANTERN
+            Material.SEA_LANTERN,
+            Material.END_STONE
     );
 
     public static boolean isSafeForPlayer(Block block) {
