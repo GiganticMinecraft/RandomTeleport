@@ -14,40 +14,38 @@ public final class RandomTeleportConfig {
     private static final String KEY_RADIUS_PER_WORLD = "RadiusPerWorld";
     private static final String KEY_ENABLE_WORLDS = "EnableWorlds";
 
-    private final Map<World, Integer> worldRadiusMap;
-    private final List<World> enableWorldList;
+    private final List<String> enabledWorldNameList;
+    private final Map<String, Integer> worldRadiusMap;
 
-    private RandomTeleportConfig(Map<World, Integer> worldRadiusMap, List<World> enableWorldList) {
+    private RandomTeleportConfig(List<String> enabledWorldNameList, Map<String, Integer> worldRadiusMap) {
+        this.enabledWorldNameList = enabledWorldNameList;
         this.worldRadiusMap = worldRadiusMap;
-        this.enableWorldList = enableWorldList;
     }
 
     public static RandomTeleportConfig from(FileConfiguration configuration) {
         int defaultRadius = configuration.getInt(KEY_DEFAULT_RADIUS);
 
-        Map<World, Integer> worldRadiusMap = Bukkit.getWorlds()
+        List<String> enabledWorldNameList = configuration.getStringList(KEY_ENABLE_WORLDS);
+        Map<String, Integer> worldRadiusMap = enabledWorldNameList
                 .stream()
                 .collect(
                         Collectors.toMap(
-                                world -> world,
-                                world -> configuration.getInt(KEY_RADIUS_PER_WORLD + "." + world.getName(), defaultRadius)
+                                worldName -> worldName,
+                                worldName -> configuration.getInt(KEY_RADIUS_PER_WORLD + "." + worldName, defaultRadius)
                         )
                 );
 
-        List<World> enableWorldList = configuration.getStringList(KEY_ENABLE_WORLDS)
-                .stream()
-                .map(Bukkit::getWorld)
-                .collect(Collectors.toList());
-
-        return new RandomTeleportConfig(worldRadiusMap, enableWorldList);
+        return new RandomTeleportConfig(enabledWorldNameList, worldRadiusMap);
     }
 
     public int getRadiusIn(World world) {
-        return this.worldRadiusMap.get(world);
+        return this.worldRadiusMap.get(world.getName());
     }
 
-    public List<World> getEnableWorldList() {
-        return this.enableWorldList;
+    public List<World> getEnabledWorldList() {
+        return this.enabledWorldNameList.stream()
+                .map(Bukkit::getWorld)
+                .collect(Collectors.toList());
     }
 
 }
