@@ -8,9 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * @author unicroak
- */
 public final class RandomTeleportCommand implements CommandExecutor {
 
     private RandomTeleportConfig randomTeleportConfig;

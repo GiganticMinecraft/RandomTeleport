@@ -9,9 +9,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-/**
- * @author unicroak
- */
 public final class ChunkUtil {
 
     private static final int DESTINATION_Y_MAX = 150;

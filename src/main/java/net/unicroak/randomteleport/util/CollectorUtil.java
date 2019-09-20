@@ -5,9 +5,6 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @author unicroak
- */
 public final class CollectorUtil {
 
     private CollectorUtil() {

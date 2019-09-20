@@ -9,9 +9,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author unicroak
- */
 public final class RandomTeleporter {
 
     private final Player player;

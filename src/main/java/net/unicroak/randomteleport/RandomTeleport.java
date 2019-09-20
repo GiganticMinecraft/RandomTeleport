@@ -3,9 +3,6 @@ package net.unicroak.randomteleport;
 import net.unicroak.randomteleport.command.RandomTeleportCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * @author unicroak
- */
 public final class RandomTeleport extends JavaPlugin {
 
     private static RandomTeleport instance;

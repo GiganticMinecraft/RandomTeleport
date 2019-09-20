@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @author unicroak
- */
 public final class RandomTeleportConfig {
 
     private static final String KEY_DEFAULT_RADIUS = "Radius";

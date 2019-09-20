@@ -8,9 +8,6 @@ import org.bukkit.block.BlockFace;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author unicroak
- */
 public final class BlockUtil {
 
     public static final List<Biome> OCEAN_BIOME_LIST = Arrays.asList(
