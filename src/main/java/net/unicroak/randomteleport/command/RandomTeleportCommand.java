@@ -19,7 +19,7 @@ public final class RandomTeleportCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "The command must be executed in game.");
+            sender.sendMessage(ChatColor.RED + "このコマンドはゲーム内から実行されなければなりません");
             return true;
         }
 
@@ -34,7 +34,7 @@ public final class RandomTeleportCommand implements CommandExecutor {
             // success
         } else {
             // failure
-            sender.sendMessage(ChatColor.RED + "Failed to teleport and try again please.");
+            sender.sendMessage(ChatColor.RED + "候補となるテレポート先が見つかりませんでした 再度お試しください");
         }
 
         return true;

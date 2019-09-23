@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 
 import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public final class ChunkUtil {
 
@@ -63,16 +62,13 @@ public final class ChunkUtil {
     }
 
     private static Optional<Location> findHighestSafetyBlockLocation(Chunk chunk, int x, int z) {
-        Stream<Block> descendingOrderedBlockStream = IntStream.range(DESTINATION_Y_MIN, DESTINATION_Y_MAX)
+        return IntStream.range(DESTINATION_Y_MIN, DESTINATION_Y_MAX)
                 .boxed()
                 .collect(CollectorUtil.toReversed())
-                .map(unsafeY -> chunk.getBlock(x, unsafeY, z));
-
-        Optional<Block> highestSafeBlock = descendingOrderedBlockStream
+                .map(unsafeY -> chunk.getBlock(x, unsafeY, z))
                 .filter(BlockUtil::isSafeForPlayer)
-                .findFirst();
-
-        return highestSafeBlock.map(Block::getLocation);
+                .findFirst()
+                .map(Block::getLocation);
     }
 
 }
