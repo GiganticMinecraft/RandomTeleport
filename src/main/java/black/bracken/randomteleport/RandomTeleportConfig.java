@@ -1,4 +1,4 @@
-package net.unicroak.randomteleport;
+package black.bracken.randomteleport;
 
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;

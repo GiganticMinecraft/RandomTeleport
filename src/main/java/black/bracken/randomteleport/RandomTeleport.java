@@ -1,6 +1,6 @@
-package net.unicroak.randomteleport;
+package black.bracken.randomteleport;
 
-import net.unicroak.randomteleport.command.RandomTeleportCommand;
+import black.bracken.randomteleport.command.RandomTeleportCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RandomTeleport extends JavaPlugin {

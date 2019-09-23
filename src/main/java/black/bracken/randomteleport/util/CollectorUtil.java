@@ -1,4 +1,4 @@
-package net.unicroak.randomteleport.util;
+package black.bracken.randomteleport.util;
 
 import java.util.Collections;
 import java.util.stream.Collector;

@@ -1,7 +1,7 @@
-package net.unicroak.randomteleport.command;
+package black.bracken.randomteleport.command;
 
-import net.unicroak.randomteleport.RandomTeleportConfig;
-import net.unicroak.randomteleport.util.RandomizedDestinationSearcher;
+import black.bracken.randomteleport.RandomTeleportConfig;
+import black.bracken.randomteleport.util.RandomizedDestinationSearcher;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

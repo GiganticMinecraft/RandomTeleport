@@ -1,7 +1,7 @@
 name: RandomTeleport
 version: @version@
-main: net.unicroak.randomteleport.RandomTeleport
-authors: [unicroak]
+main: black.bracken.randomteleport.RandomTeleport
+authors: []
 
 commands:
   randomteleport:

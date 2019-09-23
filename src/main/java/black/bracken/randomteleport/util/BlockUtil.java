@@ -1,4 +1,4 @@
-package net.unicroak.randomteleport.util;
+package black.bracken.randomteleport.util;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
