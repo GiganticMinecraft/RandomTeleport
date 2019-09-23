@@ -1,11 +1,11 @@
 package net.unicroak.randomteleport;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class RandomTeleportConfig {
@@ -14,11 +14,9 @@ public final class RandomTeleportConfig {
     private static final String KEY_RADIUS_PER_WORLD = "RadiusPerWorld";
     private static final String KEY_ENABLE_WORLDS = "EnableWorlds";
 
-    private final List<String> enabledWorldNameList;
     private final Map<String, Integer> worldRadiusMap;
 
-    private RandomTeleportConfig(List<String> enabledWorldNameList, Map<String, Integer> worldRadiusMap) {
-        this.enabledWorldNameList = enabledWorldNameList;
+    private RandomTeleportConfig(Map<String, Integer> worldRadiusMap) {
         this.worldRadiusMap = worldRadiusMap;
     }
 
@@ -35,17 +33,11 @@ public final class RandomTeleportConfig {
                         )
                 );
 
-        return new RandomTeleportConfig(enabledWorldNameList, worldRadiusMap);
+        return new RandomTeleportConfig(worldRadiusMap);
     }
 
-    public int getRadiusIn(World world) {
-        return this.worldRadiusMap.get(world.getName());
-    }
-
-    public List<World> getEnabledWorldList() {
-        return this.enabledWorldNameList.stream()
-                .map(Bukkit::getWorld)
-                .collect(Collectors.toList());
+    public Optional<Integer> getRadiusIn(World world) {
+        return Optional.ofNullable(this.worldRadiusMap.getOrDefault(world.getName(), null));
     }
 
 }

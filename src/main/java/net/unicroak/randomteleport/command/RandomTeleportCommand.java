@@ -1,12 +1,15 @@
 package net.unicroak.randomteleport.command;
 
 import net.unicroak.randomteleport.RandomTeleportConfig;
-import net.unicroak.randomteleport.RandomTeleporter;
+import net.unicroak.randomteleport.util.RandomizedDestinationSearcher;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 public final class RandomTeleportCommand implements CommandExecutor {
 
@@ -24,16 +27,14 @@ public final class RandomTeleportCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        RandomTeleporter teleporter = new RandomTeleporter(
-                player,
-                randomTeleportConfig.getRadiusIn(player.getWorld()),
-                randomTeleportConfig.getEnabledWorldList()
-        );
 
-        if (teleporter.execute()) {
-            // success
+        Optional<Location> optionalDestination = randomTeleportConfig
+                .getRadiusIn(player.getWorld())
+                .flatMap(radius -> RandomizedDestinationSearcher.search(player, radius));
+
+        if (optionalDestination.isPresent()) {
+            player.teleport(optionalDestination.get());
         } else {
-            // failure
             sender.sendMessage(ChatColor.RED + "候補となるテレポート先が見つかりませんでした 再度お試しください");
         }
 
