@@ -22,17 +22,11 @@ public final class RandomizedDestinationSearcher {
                 break;
             }
         }
+
         if (ChunkUtil.containsOceanBiome(randomChunk)) return Optional.empty();
 
-        Optional<Location> optionalDestination = ChunkUtil.getRandomizedSafetyLocation(randomChunk);
-
-        if (!optionalDestination.isPresent()) {
-            return Optional.empty();
-        } else {
-            Location destination = optionalDestination.get();
-            player.teleport(destination.add(0.5, 1.0, 0.5));
-            return Optional.empty();
-        }
+        return ChunkUtil.getRandomizedSafetyLocation(randomChunk)
+                .map(location -> location.clone().add(0.5, 1.0, 0.5));
     }
 
 }
