@@ -45,7 +45,8 @@ public final class ChunkUtil {
         );
 
         return cornerBlockList.parallelStream()
-                .anyMatch(block -> BlockUtil.OCEAN_BIOME_LIST.contains(block.getBiome()));
+                .map(Block::getBiome)
+                .anyMatch(BlockUtil.OCEAN_BIOME_LIST::contains);
     }
 
     private static List<Location> collectSafetyLocations(Chunk chunk) {
