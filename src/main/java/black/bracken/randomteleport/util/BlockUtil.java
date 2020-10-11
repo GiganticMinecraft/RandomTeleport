@@ -5,10 +5,9 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public final class BlockUtil {
 
@@ -68,16 +67,10 @@ public final class BlockUtil {
             return false;
         }
 
-        Block destination;
-        for (int y = 0; y < 3; y++) {
-            destination = block.getRelative(BlockFace.UP);
-
-            if (!PENETRATE_MATERIAL_LIST.contains(destination.getType())) {
-                return false;
-            }
-        }
-
-        return true;
+        return IntStream.range(0, 3)
+                .mapToObj(y -> block.getRelative(BlockFace.UP))
+                .map(Block::getType)
+                .allMatch(PENETRATE_MATERIAL_LIST::contains);
     }
 
 }
