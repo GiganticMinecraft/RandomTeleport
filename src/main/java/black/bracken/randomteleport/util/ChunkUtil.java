@@ -32,8 +32,7 @@ public final class ChunkUtil {
         if (safetyLocationList.isEmpty()) {
             return Optional.empty();
         } else {
-            Collections.shuffle(safetyLocationList);
-            return Optional.of(safetyLocationList.get(0));
+            return Optional.of(safetyLocationList.get(randomGenerator.nextInt(safetyLocationList.size())));
         }
     }
 
@@ -46,18 +45,17 @@ public final class ChunkUtil {
         );
 
         return cornerBlockList.parallelStream()
-                .anyMatch(block -> BlockUtil.OCEAN_BIOME_LIST.contains(block.getBiome()));
+                .map(Block::getBiome)
+                .anyMatch(BlockUtil.OCEAN_BIOME_LIST::contains);
     }
 
     private static List<Location> collectSafetyLocations(Chunk chunk) {
-        List<Location> safetyLocationList = new ArrayList<>();
+        ArrayList<Location> safetyLocationList = new ArrayList<>(256);
+        IntStream.range(0, 16).forEach(x -> IntStream.range(0,16).forEach(z ->
+                findHighestSafetyBlockLocation(chunk, x, z).ifPresent(safetyLocationList::add)
+        ));
 
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                findHighestSafetyBlockLocation(chunk, x, z).ifPresent(safetyLocationList::add);
-            }
-        }
-
+        safetyLocationList.trimToSize();
         return safetyLocationList;
     }
 

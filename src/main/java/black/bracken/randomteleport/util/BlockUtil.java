@@ -5,18 +5,19 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 public final class BlockUtil {
 
-    public static final List<Biome> OCEAN_BIOME_LIST = Arrays.asList(
+    public static final Set<Biome> OCEAN_BIOME_LIST = EnumSet.of(
             Biome.OCEAN,
             Biome.DEEP_OCEAN,
             Biome.FROZEN_OCEAN
     );
 
-    private static final List<Material> PENETRATE_MATERIAL_LIST = Arrays.asList(
+    private static final Set<Material> PENETRATE_MATERIAL_LIST = EnumSet.of(
             Material.AIR,
             Material.GRASS_PATH,
             Material.LONG_GRASS,
@@ -24,7 +25,7 @@ public final class BlockUtil {
             Material.SNOW
     );
 
-    private static final List<Material> GROUND_MATERIAL_LIST = Arrays.asList(
+    private static final Set<Material> GROUND_MATERIAL_LIST = EnumSet.of(
             Material.STONE,
             Material.MOSSY_COBBLESTONE,
             Material.SANDSTONE,
@@ -66,16 +67,10 @@ public final class BlockUtil {
             return false;
         }
 
-        Block destination;
-        for (int y = 0; y < 3; y++) {
-            destination = block.getRelative(BlockFace.UP);
-
-            if (!PENETRATE_MATERIAL_LIST.contains(destination.getType())) {
-                return false;
-            }
-        }
-
-        return true;
+        return IntStream.range(0, 3)
+                .mapToObj(y -> block.getRelative(BlockFace.UP))
+                .map(Block::getType)
+                .allMatch(PENETRATE_MATERIAL_LIST::contains);
     }
 
 }
