@@ -2,9 +2,11 @@ package black.bracken.randomteleport.util;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public final class RandomizedDestinationSearcher {
 
@@ -14,16 +16,15 @@ public final class RandomizedDestinationSearcher {
     public static Optional<Location> search(Player player, int radiusToSearch) {
         if (!player.isOnline() || player.isDead()) return Optional.empty();
 
-        Chunk randomChunk = null;
-        for (int tryCountToSearchChunk = 0; tryCountToSearchChunk < 16; tryCountToSearchChunk++) {
-            randomChunk = ChunkUtil.getRandomizedChunk(player.getWorld(), radiusToSearch);
+        World world = player.getWorld();
+        Chunk randomChunk = IntStream.rangeClosed(0, 15)
+                .parallel()
+                .mapToObj(tryCountToSearchChunk -> ChunkUtil.getRandomizedChunk(world, radiusToSearch))
+                .filter(chunk -> !ChunkUtil.containsOceanBiome(chunk))
+                .findFirst()
+                .orElse(null);
 
-            if (!ChunkUtil.containsOceanBiome(randomChunk)) {
-                break;
-            }
-        }
-
-        if (ChunkUtil.containsOceanBiome(randomChunk)) return Optional.empty();
+        if (randomChunk != null && ChunkUtil.containsOceanBiome(randomChunk)) return Optional.empty();
 
         return ChunkUtil.getRandomizedSafetyLocation(randomChunk)
                 .map(location -> location.clone().add(0.5, 1.0, 0.5));
