@@ -32,8 +32,7 @@ public final class ChunkUtil {
         if (safetyLocationList.isEmpty()) {
             return Optional.empty();
         } else {
-            Collections.shuffle(safetyLocationList);
-            return Optional.of(safetyLocationList.get(0));
+            return Optional.of(safetyLocationList.get(randomGenerator.nextInt(safetyLocationList.size())));
         }
     }
 
