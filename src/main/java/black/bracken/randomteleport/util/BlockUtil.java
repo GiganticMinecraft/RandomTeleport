@@ -6,17 +6,19 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 public final class BlockUtil {
 
-    public static final List<Biome> OCEAN_BIOME_LIST = Arrays.asList(
+    public static final Set<Biome> OCEAN_BIOME_LIST = EnumSet.of(
             Biome.OCEAN,
             Biome.DEEP_OCEAN,
             Biome.FROZEN_OCEAN
     );
 
-    private static final List<Material> PENETRATE_MATERIAL_LIST = Arrays.asList(
+    private static final Set<Material> PENETRATE_MATERIAL_LIST = EnumSet.of(
             Material.AIR,
             Material.GRASS_PATH,
             Material.LONG_GRASS,
@@ -24,7 +26,7 @@ public final class BlockUtil {
             Material.SNOW
     );
 
-    private static final List<Material> GROUND_MATERIAL_LIST = Arrays.asList(
+    private static final Set<Material> GROUND_MATERIAL_LIST = EnumSet.of(
             Material.STONE,
             Material.MOSSY_COBBLESTONE,
             Material.SANDSTONE,
