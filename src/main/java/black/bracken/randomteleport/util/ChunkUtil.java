@@ -45,7 +45,7 @@ public final class ChunkUtil {
                 chunk.getBlock(15, 1, 15)
         );
 
-        return cornerBlockList.parallelStream()
+        return cornerBlockList.stream()
                 .anyMatch(block -> BlockUtil.OCEAN_BIOME_LIST.contains(block.getBiome()));
     }
 

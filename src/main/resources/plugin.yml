@@ -2,6 +2,7 @@ name: RandomTeleport
 version: @version@
 main: black.bracken.randomteleport.RandomTeleport
 authors: []
+api-version: 1.18
 
 commands:
   randomteleport:

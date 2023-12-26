@@ -13,13 +13,20 @@ public final class BlockUtil {
     public static final List<Biome> OCEAN_BIOME_LIST = Arrays.asList(
             Biome.OCEAN,
             Biome.DEEP_OCEAN,
-            Biome.FROZEN_OCEAN
+            Biome.FROZEN_OCEAN,
+            Biome.COLD_OCEAN,
+            Biome.DEEP_COLD_OCEAN,
+            Biome.WARM_OCEAN,
+            Biome.LUKEWARM_OCEAN,
+            Biome.DEEP_LUKEWARM_OCEAN,
+            Biome.DEEP_FROZEN_OCEAN
     );
 
     private static final List<Material> PENETRATE_MATERIAL_LIST = Arrays.asList(
             Material.AIR,
-            Material.GRASS_PATH,
-            Material.LONG_GRASS,
+            Material.DIRT_PATH,
+            Material.GRASS,
+            Material.TALL_GRASS,
             Material.DEAD_BUSH,
             Material.SNOW
     );
@@ -32,7 +39,8 @@ public final class BlockUtil {
             Material.OBSIDIAN,
             Material.DIRT,
             Material.GRASS,
-            Material.GRASS_PATH,
+            Material.GRASS_BLOCK,
+            Material.DIRT_PATH,
             Material.EMERALD_ORE,
             Material.LAPIS_ORE,
             Material.GOLD_ORE,
@@ -57,7 +65,7 @@ public final class BlockUtil {
             Material.NETHERRACK,
             Material.GLOWSTONE,
             Material.SEA_LANTERN,
-            Material.ENDER_STONE
+            Material.END_STONE
     );
 
     public static boolean isSafeForPlayer(Block block) {
