@@ -1,0 +1,21 @@
+name: CI and CD
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  ci:
+    name: CI
+    uses: Lucky3028/shared-workflows/.github/workflows/kotlin-ci.yaml@main
+    with:
+      jdk-version: 17
+      gradle-jvm-version: 17
+  cd:
+    name: CD
+    uses: Lucky3028/shared-workflows/.github/workflows/kotlin-cd.yaml@main
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - ci
